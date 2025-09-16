@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page de veille</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            background-color: #0d1117;
+            padding-top: 5px;
+            color: #00bfff;
+        }
+
+        h1 {
+            border-bottom: 2px solid #00bfff;
+            padding-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: #00bfff;
+        }
+
+        .abc {
+            margin: 100px auto;
+            max-width: 600px;
+            background-color: #1a1f2b;
+            /* padding: 1.5rem; */
+            border: 2px solid #00bfff;
+            box-shadow: 0px 0px 30px #00bfff;
+            border-radius: 8px;
+            /* padding: 20px; */
+            position: relative;
+        }
+
+        .abc::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(to bottom,
+                    rgba(0, 191, 255, 0.05),
+                    rgba(0, 191, 255, 0.05) 1px,
+                    transparent 1px,
+                    transparent 2px);
+            pointer-events: none;
+        }
+
+        #countdown {
+            font-size: 2em;
+            margin-top: 30px;
+            color: #00bfff;
+            display: block;
+            margin: 1rem 0;
+            text-decoration: none;
+        }
+
+        #countdown:hover {
+            text-decoration: underline;
+        }
+
+        .ss {
+            border-bottom: 2px solid #00bfff;
+            padding-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 2rem;
+        }
+
+        .ssd {
+            color: #00bfff;
+        }
+
+        .grid-media {
+            display: grid;
+            grid-template-columns: 3fr 3fr 3fr;
+            grid-auto-rows: 600px;
+            gap: 15px;
+            margin: 50px 0;
+        }
+
+        .grid-media img,
+        .grid-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* border-radius: 8px; */
+            cursor: pointer;
+            /* box-shadow: 0 2px 8px #aaa; */
+            border: 2px solid #00bfff;
+            /* box-shadow: 0px 0px 30px #00bfff; */
+            border-radius: 8px;
+        }
+
+        .grid-media img:hover,
+        .grid-media video:hover {
+            cursor: pointer;
+            box-shadow: 0px 0px 30px #00bfff;
+            border-radius: 8px;
+        }
+
+        /* Modal styles */
+        #mediaModal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        #modalImg,
+        #modalVideo {
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 10px;
+            display: none;
+            background: #000;
+        }
+
+        #closeModal,
+        #prevMedia,
+        #nextMedia {
+            position: absolute;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #closeModal {
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+        }
+
+        #prevMedia {
+            top: 50%;
+            left: 20px;
+            font-size: 60px;
+        }
+
+        #nextMedia {
+            top: 50%;
+            right: 20px;
+            font-size: 60px;
+        }
+
+        audio {
+            margin: 25px;
+            /* width: 80%; */
+            /* border: 2px solid #00bfff; */
+            box-shadow: 0px 0px 30px #00bfff;
+            border-radius: 100px;
+
+        }
+
+        audio:hover:-webkit-media-controls-panel {
+            background-color: #1a1f2b;
+            /* border-radius: 8px; */
+        }
+        @media (max-width: 450px) and (max-height: 900px) {
+            body {
+                padding-top: 20px;
+                font-family: 'Orbitron', sans-serif;
+                text-align: center;
+                background-color: #0d1117;
+                color: #00bfff;
+            }
+
+            h1 {
+                border-bottom: 2px solid #00bfff;
+                padding-bottom: 0.5rem;
+                text-transform: uppercase;
+            }
+
+            h2 {
+                color: #00bfff;
+            }
+
+            p {
+                font-size: 1.3rem;
+            }
+
+            .abc {
+                margin: 100px auto;
+                max-width: 400px;
+                background-color: #1a1f2b;
+                padding: 1.5rem;
+                border: 2px solid #00bfff;
+                box-shadow: 0px 0px 30px #00bfff;
+                border-radius: 8px;
+                padding: 20px;
+                position: relative;
+            }
+
+            .abc::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: repeating-linear-gradient(to bottom,
+                        rgba(0, 191, 255, 0.05),
+                        rgba(0, 191, 255, 0.05) 1px,
+                        transparent 1px,
+                        transparent 2px);
+                pointer-events: none;
+            }
+
+            .grid-media {
+                display: grid;
+                grid-template-columns: 3fr 3fr 3fr;
+                grid-auto-rows: 300px;
+                gap: 15px;
+                margin: 10px;
+            }
+
+            .ss {
+                border-bottom: 2px solid #00bfff;
+                padding-bottom: 0.5rem;
+                text-transform: uppercase;
+                font-size: 2rem;
+            }
+
+            .ssd {
+                color: #00bfff;
+                font-size: 1.2rem;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="abc" id="splash">
+        <h1>Cette page sera bientôt disponible !<br>🚧Travaux en cours🚧</h1>
+        <p>Ouverture prévue le <strong><br>17 septembre 2025 à 00h00</strong></p>
+        <div id="countdown"><span id="time"></span></div>
+    </div>
+
+    <div id="main" style="display: none;">
+        <main>
+            <section class="intro">
+                <h1 class="ss">✨Joyeux anniversaire<br>Josta🌞🎉</h1>
+                <h2 class="ssd">✨ Aujourd’hui, on célèbre Josta ✨<br>
+                    Un ami au grand cœur, toujours souriant, dont la joie de vivre illumine ceux qui l’entourent.<br>
+                    Ta bonne humeur, ta gentillesse, ton côté serviable et galant font de toi une personne rare et
+                    précieuse.<br>
+                    Joyeux anniversaire Josta, continue de transmettre ton soleil partout où tu passes !</h2>
+            </section>
+            <section class="photos">
+                <div class="grid-media">
+                    <img src="1A.jpg" alt="photo">
+                    <video controls src="1D.mp4" preload="MINI"></video>
+                    <img src="1F.jpg" alt="soireee">
+                    <img src="1C.jpg" alt="gj">
+                    <img src="1H.jpg" alt="cic">
+                    <img src="1G.jpg" alt="souvenir">
+                    <img src="1B.jpg" alt="souvenir">
+                    <video controls src="1E.mp4" preload="LONGUE"></video>
+                    <img src="6.jpg" alt="souvenir">
+                </div>
+            </section>
+            <h1 class="ssd">Le meilleur pour la fin</h1>
+            <audio controls src="abc.opus" preload="souhait"></audio>
+            <h2 class="ssd">un souhait spécial, pour une personne spéciale</h2>
+        </main>
+    </div>
+    <h1>By Benjamin Mbuku</h1>
+    <!-- Modal pour images et vidéo -->
+    <div id="mediaModal">
+        <span id="closeModal">&times;</span>
+        <img id="modalImg" src="">
+        <video id="modalVideo" controls></video>
+        <div id="prevMedia">&#10094;</div>
+        <div id="nextMedia">&#10095;</div>
+    </div>
+
+    <script>
+        // Compte à rebours jusqu'au 17 septembre 2025 à 00h00 (heure locale)
+        const target = new Date(2025, 8, 1, 0, 0, 0);
+        const countdownEl = document.getElementById("time");
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = target - now;
+            if (diff <= 0) {
+                showUnlockedPage();
+            } else {
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / (1000 * 60)) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+                countdownEl.textContent = `${d}j ${h}h ${m}m ${s}s`;
+            }
+        }
+        function showUnlockedPage() {
+            document.getElementById("splash").style.display = "none";
+            document.getElementById("main").style.display = "block";
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Modal images/vidéo
+        const medias = Array.from(document.querySelectorAll('.grid-media img, .grid-media video'));
+        const modal = document.getElementById('mediaModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalVideo = document.getElementById('modalVideo');
+        let idx = 0;
+
+        medias.forEach((media, i) => {
+            media.onclick = () => { idx = i; showMedia(); };
+        });
+
+        function showMedia() {
+            modal.style.display = 'flex';
+            const media = medias[idx];
+            if (media.tagName === 'IMG') {
+                modalImg.src = media.src;
+                modalImg.style.display = 'block';
+                modalVideo.style.display = 'none';
+                modalVideo.pause();
+            } else if (media.tagName === 'VIDEO') {
+                modalVideo.src = media.src;
+                modalVideo.style.display = 'block';
+                modalImg.style.display = 'none';
+                modalVideo.currentTime = 0;
+                modalVideo.play();
+            }
+        }
+        document.getElementById('closeModal').onclick = () => {
+            modal.style.display = 'none';
+            modalVideo.pause();
+        };
+        document.getElementById('prevMedia').onclick = e => {
+            e.stopPropagation();
+            idx = (idx - 1 + medias.length) % medias.length;
+            showMedia();
+        };
+        document.getElementById('nextMedia').onclick = e => {
+            e.stopPropagation();
+            idx = (idx + 1) % medias.length;
+            showMedia();
+        };
+        modal.onclick = e => { if (e.target === modal) { modal.style.display = 'none'; modalVideo.pause(); } };
+    </script>
+</body>
+
+</html>
